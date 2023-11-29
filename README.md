@@ -1,0 +1,51 @@
+# Synrgy Chapter 7
+
+### 🚩Table of Contents
+
+[Description](https://github.com/anantyan/SynrgyChapter7#-description)
+
+[Technology and Library](https://github.com/anantyan/SynrgyChapter7#-technology-and-library)
+
+[Snapshoot](https://github.com/anantyan/SynrgyChapter7#%EF%B8%8F-snapshoot)
+
+[Capture Video](https://github.com/anantyan/SynrgyChapter7#-capture-video)
+
+### 📌 Description
+
+The challenge results from the intensive learning of chapter 7 - Which is where the project is about an application listing data about food and beverage recipes that can be seen in one handheld mobile android, as well as details on how to make it up to what tools and recipe ingredients are provided. Thank you for providing a limited free API service, and at least it can be used for learning.
+- https://spoonacular.com/food-api/docs
+- https://api.imgbb.com/
+
+***note:*** 
+
+- Applying design patterns `MVVM`. ✔
+- Applying `Dependency Injection` on the project created. ✔
+- Applying `Clean Architecture`. ✔
+- Applying `Modularization`. ✔
+- Adding a photo feature to the profile where users can upload photos and proccessed in `Work Manager` on the app and display it. ✔
+
+### 👣 Technology and Library
+
+- `Kotlin` (100%)
+- `MVVM` + `Clean Architecture Component` + `Modularization`
+- `Navigation Component` + `Single Activity Architecture`
+- `Dagger Hilt` for Dependencies Injection
+- Theme `Material You` (Material Design 3)
+- `ViewModel` + `LifeCycle`
+- `Paging 3` + `RecyclerView`
+- Kotlin `Coroutine`
+- `Retrofit2` for Request or Response HTTP Network
+- `Room` Database
+- `Coil` for Load Image
+- `Chucker` for Logging HTTP Request & Response
+- `DataStore` AndroidX for Local Store Pair Key Value
+- Image Picker + Cropping Image from `SSImagePicker` - Simform Solutions Pvt Ltd
+- `WorkManager` for Upload photo feature
+
+### 🖼️ Snapshoot
+
+`Not Found` - Developer is not providing Preview Photo
+
+### 📹 Capture Video
+
+`Not Found` - Developer is not providing Preview Video
