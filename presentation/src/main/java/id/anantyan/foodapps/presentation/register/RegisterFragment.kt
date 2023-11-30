@@ -16,8 +16,8 @@ import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.common.emailValid
 import id.anantyan.foodapps.common.passwordValid
 import id.anantyan.foodapps.common.usernameValid
-import id.anantyan.foodapps.presentation.databinding.FragmentRegisterBinding
 import id.anantyan.foodapps.domain.model.UserModel
+import id.anantyan.foodapps.presentation.databinding.FragmentRegisterBinding
 import io.github.anderscheow.validator.Validator
 import io.github.anderscheow.validator.constant.Mode
 import io.github.anderscheow.validator.validator

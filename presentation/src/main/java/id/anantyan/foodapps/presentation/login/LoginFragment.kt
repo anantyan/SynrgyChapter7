@@ -12,12 +12,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import id.anantyan.foodapps.presentation.NavGraphMainDirections
 import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.common.emailValid
 import id.anantyan.foodapps.common.passwordValid
-import id.anantyan.foodapps.presentation.databinding.FragmentLoginBinding
 import id.anantyan.foodapps.domain.model.UserModel
+import id.anantyan.foodapps.presentation.NavGraphMainDirections
+import id.anantyan.foodapps.presentation.databinding.FragmentLoginBinding
 import io.github.anderscheow.validator.Validator
 import io.github.anderscheow.validator.constant.Mode
 import io.github.anderscheow.validator.validator
@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
             binding.btnTheme.isChecked = it
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
 
-        viewModel.login.onEach { state ->
+        viewModel.login.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Loading -> {}
                 is UIState.Success -> {
@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(state.message!!), Toast.LENGTH_LONG).show()
                 }
             }
-        }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
+        }
     }
 
     private fun bindView() {

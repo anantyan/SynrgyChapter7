@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import id.anantyan.foodapps.presentation.databinding.ListItemTypeBinding
 
 class HomeCategoriesAdapter : ListAdapter<HomeCategoriesModel, HomeCategoriesAdapter.HomeCategoriesModelViewHolder>(
-        HomeCategoriesModelComparator
-    ) {
+    HomeCategoriesModelComparator
+) {
     private var _onClick: ((position: Int, item: HomeCategoriesModel) -> Unit)? = null
 
     private object HomeCategoriesModelComparator : DiffUtil.ItemCallback<HomeCategoriesModel>() {

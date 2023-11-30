@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import id.anantyan.foodapps.presentation.databinding.ListItemDetailInstructionsBinding
 import id.anantyan.foodapps.domain.model.StepsItem
+import id.anantyan.foodapps.presentation.databinding.ListItemDetailInstructionsBinding
 
-class DetailInstructionsAdapter : ListAdapter<StepsItem, DetailInstructionsAdapter.StepsItemViewHolder>(StepsItemComparator) {
+class DetailInstructionsAdapter : ListAdapter<StepsItem, DetailInstructionsAdapter.StepsItemViewHolder>(
+    StepsItemComparator
+) {
 
     private object StepsItemComparator : DiffUtil.ItemCallback<StepsItem>() {
         override fun areItemsTheSame(oldItem: StepsItem, newItem: StepsItem): Boolean {
@@ -40,7 +42,7 @@ class DetailInstructionsAdapter : ListAdapter<StepsItem, DetailInstructionsAdapt
 
         @SuppressLint("SetTextI18n")
         fun bindItem(item: StepsItem) {
-            binding.txtValue.text = "${bindingAdapterPosition+1}. ${item.step}"
+            binding.txtValue.text = "${bindingAdapterPosition + 1}. ${item.step}"
         }
     }
 }

@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import id.anantyan.foodapps.presentation.databinding.ListItemDetailIngredientsBinding
 import id.anantyan.foodapps.domain.model.ExtendedIngredientsItem
+import id.anantyan.foodapps.presentation.databinding.ListItemDetailIngredientsBinding
 
 class DetailIngredientsAdapter : ListAdapter<ExtendedIngredientsItem, DetailIngredientsAdapter.ExtendedIngredientsItemViewHolder>(
     ExtendedIngredientsItemComparator
@@ -47,12 +47,14 @@ class DetailIngredientsAdapter : ListAdapter<ExtendedIngredientsItem, DetailIngr
         holder.bindItem(getItem(position))
     }
 
-    inner class ExtendedIngredientsItemViewHolder(private val binding: ListItemDetailIngredientsBinding) :
+    inner class ExtendedIngredientsItemViewHolder(
+        private val binding: ListItemDetailIngredientsBinding
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bindItem(item: ExtendedIngredientsItem) {
-            binding.txtValue.text = "${bindingAdapterPosition+1}. ${item.original}"
+            binding.txtValue.text = "${bindingAdapterPosition + 1}. ${item.original}"
         }
     }
 }

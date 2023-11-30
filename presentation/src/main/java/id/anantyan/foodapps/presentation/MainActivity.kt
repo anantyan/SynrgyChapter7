@@ -3,17 +3,12 @@ package id.anantyan.foodapps.presentation
 import android.Manifest
 import android.app.UiModeManager
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -22,7 +17,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import id.anantyan.foodapps.common.createMessageDialog
 import id.anantyan.foodapps.common.permissionDialog
 import id.anantyan.foodapps.presentation.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.launchIn
@@ -30,12 +24,14 @@ import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val viewModel: MainViewModel by viewModels()
-    private val permissionNotificationLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    private val permissionNotificationLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { }
 
+    // askdjalkjdasasdd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -101,7 +97,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                         "Without the notification it is not possible to Information Upload Photo..."
                     )
                 }
-                else -> { permissionNotificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) }
+                else -> {
+                    permissionNotificationLauncher.launch(
+                        Manifest.permission.POST_NOTIFICATIONS
+                    )
+                }
             }
         }
     }

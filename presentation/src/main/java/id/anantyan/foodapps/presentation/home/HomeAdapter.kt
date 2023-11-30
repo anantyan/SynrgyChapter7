@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.ViewSizeResolver
 import id.anantyan.foodapps.common.R
-import id.anantyan.foodapps.presentation.databinding.ListItemHomeBinding
 import id.anantyan.foodapps.domain.model.FoodModel
+import id.anantyan.foodapps.presentation.databinding.ListItemHomeBinding
 
 class HomeAdapter : ListAdapter<FoodModel, HomeAdapter.ResultsItemViewHolder>(ResultsItemComparator) {
 

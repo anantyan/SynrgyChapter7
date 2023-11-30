@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.anantyan.foodapps.common.R
 import id.anantyan.foodapps.common.calculateSpanCount
-import id.anantyan.foodapps.presentation.databinding.FragmentFavoriteBinding
 import id.anantyan.foodapps.domain.model.FoodModel
+import id.anantyan.foodapps.presentation.databinding.FragmentFavoriteBinding
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
@@ -29,6 +29,7 @@ class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FavoriteViewModel by viewModels()
+
     @Inject lateinit var favoriteAdapter: FavoriteAdapter
 
     override fun onCreateView(
@@ -52,14 +53,22 @@ class FavoriteFragment : Fragment() {
         binding.toolbar.isTitleCentered = true
 
         binding.rvFavorite.setHasFixedSize(true)
-        binding.rvFavorite.layoutManager = StaggeredGridLayoutManager(requireActivity().windowManager.calculateSpanCount(), RecyclerView.VERTICAL)
+        binding.rvFavorite.layoutManager = StaggeredGridLayoutManager(
+            requireActivity().windowManager.calculateSpanCount(),
+            RecyclerView.VERTICAL
+        )
         binding.rvFavorite.itemAnimator = DefaultItemAnimator()
         binding.rvFavorite.isNestedScrollingEnabled = true
         binding.rvFavorite.adapter = favoriteAdapter
 
-        favoriteAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        favoriteAdapter.stateRestorationPolicy = RecyclerView
+            .Adapter
+            .StateRestorationPolicy
+            .PREVENT_WHEN_EMPTY
         favoriteAdapter.onClick { _, item ->
-            val destination = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(item.id ?: -1)
+            val destination = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(
+                item.id ?: -1
+            )
             findNavController().navigate(destination)
         }
     }
@@ -73,7 +82,9 @@ class FavoriteFragment : Fragment() {
                 favoriteAdapter.submitList(emptyList())
                 binding.imgViewFavorite.isVisible = true
             }
-        }.flowWithLifecycle(viewLifecycleOwner.lifecycle).launchIn(viewLifecycleOwner.lifecycleScope)
+        }.flowWithLifecycle(viewLifecycleOwner.lifecycle).launchIn(
+            viewLifecycleOwner.lifecycleScope
+        )
     }
 
     private fun onBackPressedCallback() = object : OnBackPressedCallback(true) {

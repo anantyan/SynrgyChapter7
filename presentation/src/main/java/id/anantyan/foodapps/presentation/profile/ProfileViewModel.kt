@@ -9,21 +9,21 @@ import id.anantyan.foodapps.common.R
 import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.domain.repository.PreferencesUseCase
 import id.anantyan.foodapps.domain.repository.UserUseCase
-import id.anantyan.foodapps.domain.repository.UsersUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val preferencesUseCase: PreferencesUseCase,
     private val userUseCase: UserUseCase
 ) : ViewModel() {
-    private var _showProfile: MutableStateFlow<UIState<List<ProfileItemModel>>> = MutableStateFlow(UIState.Loading())
+    private var _showProfile: MutableStateFlow<UIState<List<ProfileItemModel>>> = MutableStateFlow(
+        UIState.Loading()
+    )
     private var _showPhoto: MutableLiveData<String> = MutableLiveData()
 
     val showProfile: StateFlow<UIState<List<ProfileItemModel>>> = _showProfile
@@ -51,9 +51,21 @@ class ProfileViewModel @Inject constructor(
                     is UIState.Success -> {
                         UIState.Success(
                             listOf(
-                                ProfileItemModel(R.drawable.ic_key_id, R.string.txt_id, state.data?.id.toString()),
-                                ProfileItemModel(R.drawable.ic_shield_person, R.string.txt_username, state.data?.username),
-                                ProfileItemModel(R.drawable.ic_email, R.string.txt_email, state.data?.email)
+                                ProfileItemModel(
+                                    R.drawable.ic_key_id,
+                                    R.string.txt_id,
+                                    state.data?.id.toString()
+                                ),
+                                ProfileItemModel(
+                                    R.drawable.ic_shield_person,
+                                    R.string.txt_username,
+                                    state.data?.username
+                                ),
+                                ProfileItemModel(
+                                    R.drawable.ic_email,
+                                    R.string.txt_email,
+                                    state.data?.email
+                                )
                             )
                         )
                     }

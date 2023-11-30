@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.domain.model.UserModel
 import id.anantyan.foodapps.domain.repository.UserUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(

@@ -7,13 +7,13 @@ import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.domain.model.FoodModel
 import id.anantyan.foodapps.domain.repository.FoodsUseCase
 import id.anantyan.foodapps.domain.repository.PreferencesUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -49,8 +49,12 @@ class DetailViewModel @Inject constructor(
                 when (state) {
                     is UIState.Loading -> { }
                     is UIState.Success -> {
-                        val userId: Int = runBlocking { preferencesUseCase.executeGetUserId().first() }
-                        foodsUseCase.executeBookmarkFood(state.data?.withUser(userId) ?: FoodModel())
+                        val userId: Int = runBlocking {
+                            preferencesUseCase.executeGetUserId().first()
+                        }
+                        foodsUseCase.executeBookmarkFood(
+                            state.data?.withUser(userId) ?: FoodModel()
+                        )
                         _stateBookmarked.value = true
                     }
                     is UIState.Error -> {
@@ -71,5 +75,17 @@ class DetailViewModel @Inject constructor(
 }
 
 fun FoodModel.withUser(userId: Int?): FoodModel {
-    return FoodModel(analyzedInstructions, title, preparationMinutes, readyInMinutes, sourceName, servings, id, summary, image, extendedIngredients, userId)
+    return FoodModel(
+        analyzedInstructions,
+        title,
+        preparationMinutes,
+        readyInMinutes,
+        sourceName,
+        servings,
+        id,
+        summary,
+        image,
+        extendedIngredients,
+        userId
+    )
 }

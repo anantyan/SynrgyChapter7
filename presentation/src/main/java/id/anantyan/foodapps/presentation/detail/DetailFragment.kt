@@ -28,9 +28,9 @@ import id.anantyan.foodapps.common.R
 import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.common.calculateSpanCountSmall
 import id.anantyan.foodapps.presentation.databinding.FragmentDetailBinding
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -39,7 +39,9 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val binding get() = _binding!!
     private val viewModel: DetailViewModel by viewModels()
     private val args: DetailFragmentArgs by navArgs()
+
     @Inject lateinit var ingredientsAdapter: DetailIngredientsAdapter
+
     @Inject lateinit var instructionsAdapter: DetailInstructionsAdapter
 
     override fun onCreateView(
@@ -60,7 +62,10 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun bindView() {
         binding.toolbar.setOnMenuItemClickListener(this)
-        binding.toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_keyboard_backspace)
+        binding.toolbar.navigationIcon = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.ic_keyboard_backspace
+        )
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -72,20 +77,32 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
         binding.rvIngredients.setHasFixedSize(true)
         binding.rvIngredients.addItemDecoration(divider)
-        binding.rvIngredients.layoutManager = GridLayoutManager(requireContext(), requireActivity().windowManager.calculateSpanCountSmall())
+        binding.rvIngredients.layoutManager = GridLayoutManager(
+            requireContext(),
+            requireActivity().windowManager.calculateSpanCountSmall()
+        )
         binding.rvIngredients.itemAnimator = DefaultItemAnimator()
         binding.rvIngredients.isNestedScrollingEnabled = false
         binding.rvIngredients.adapter = ingredientsAdapter
 
         binding.rvInstructions.setHasFixedSize(true)
         binding.rvInstructions.addItemDecoration(divider)
-        binding.rvInstructions.layoutManager = GridLayoutManager(requireContext(), requireActivity().windowManager.calculateSpanCountSmall())
+        binding.rvInstructions.layoutManager = GridLayoutManager(
+            requireContext(),
+            requireActivity().windowManager.calculateSpanCountSmall()
+        )
         binding.rvInstructions.itemAnimator = DefaultItemAnimator()
         binding.rvInstructions.isNestedScrollingEnabled = false
         binding.rvInstructions.adapter = instructionsAdapter
 
-        ingredientsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        instructionsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        ingredientsAdapter.stateRestorationPolicy = RecyclerView
+            .Adapter
+            .StateRestorationPolicy
+            .PREVENT_WHEN_EMPTY
+        instructionsAdapter.stateRestorationPolicy = RecyclerView
+            .Adapter
+            .StateRestorationPolicy
+            .PREVENT_WHEN_EMPTY
     }
 
     private fun bindObserver() {
@@ -99,7 +116,9 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 binding.toolbar.menu.findItem(R.id.unbookmark).isVisible = true
                 binding.toolbar.menu.findItem(R.id.bookmark).isVisible = false
             }
-        }.flowWithLifecycle(viewLifecycleOwner.lifecycle).launchIn(viewLifecycleOwner.lifecycleScope)
+        }.flowWithLifecycle(viewLifecycleOwner.lifecycle).launchIn(
+            viewLifecycleOwner.lifecycleScope
+        )
 
         viewModel.result(args.idRecipe).onEach { state ->
             when (state) {
@@ -125,11 +144,18 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     @Suppress("SetTextI18n")
                     binding.txtServings.text = state.data?.servings.toString() + " Servings"
                     @Suppress("SetTextI18n")
-                    binding.txtPrepareOnMinutes.text = state.data?.readyInMinutes.toString() + " Ready in Minutes"
-                    binding.txtSummary.text = Html.fromHtml(state.data?.summary, Html.FROM_HTML_MODE_COMPACT)
+                    binding.txtPrepareOnMinutes.text = state
+                        .data?.readyInMinutes
+                        .toString() + " Ready in Minutes"
+                    binding.txtSummary.text = Html.fromHtml(
+                        state.data?.summary,
+                        Html.FROM_HTML_MODE_COMPACT
+                    )
                     ingredientsAdapter.submitList(state.data?.extendedIngredients ?: emptyList())
                     if (!state.data?.analyzedInstructions.isNullOrEmpty()) {
-                        instructionsAdapter.submitList(state.data?.analyzedInstructions?.get(0)?.steps ?: emptyList())
+                        instructionsAdapter.submitList(
+                            state.data?.analyzedInstructions?.get(0)?.steps ?: emptyList()
+                        )
                     } else {
                         instructionsAdapter.submitList(emptyList())
                     }

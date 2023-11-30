@@ -13,15 +13,9 @@ import kotlinx.coroutines.flow.flow
 class UserRepositoryImpl(
     private val usersDao: UsersDao
 ) : UserRepository {
-    override fun login(user: UserModel): Flow<UIState<UserModel>> {
-        return flow {
-            val result = usersDao.login(user.email, user.password)
-            if (result != null) {
-                emit(UIState.Success(result.toModel()))
-            } else {
-                emit(UIState.Error(null, R.string.txt_invalid_login))
-            }
-        }
+    override suspend fun login(user: UserModel): UserModel? {
+        val result = usersDao.login(user.email, user.password)
+        return result?.toModel()
     }
 
     override fun register(user: UserModel): Flow<UIState<Int>> {

@@ -19,9 +19,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.common.calculateSpanCount
 import id.anantyan.foodapps.presentation.databinding.FragmentHomeBinding
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -29,7 +29,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
+
     @Inject lateinit var adapter: HomeAdapter
+
     @Inject lateinit var adapterCategories: HomeCategoriesAdapter
 
     override fun onCreateView(
@@ -50,24 +52,39 @@ class HomeFragment : Fragment() {
 
     private fun bindView() {
         binding.rvHome.setHasFixedSize(true)
-        binding.rvHome.layoutManager = StaggeredGridLayoutManager(requireActivity().windowManager.calculateSpanCount(), RecyclerView.VERTICAL)
+        binding.rvHome.layoutManager = StaggeredGridLayoutManager(
+            requireActivity().windowManager.calculateSpanCount(),
+            RecyclerView.VERTICAL
+        )
         binding.rvHome.itemAnimator = DefaultItemAnimator()
         binding.rvHome.isNestedScrollingEnabled = true
         binding.rvHome.adapter = adapter
-        
+
         binding.rvType.setHasFixedSize(true)
-        binding.rvType.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        binding.rvType.layoutManager = LinearLayoutManager(
+            requireContext(),
+            RecyclerView.HORIZONTAL,
+            false
+        )
         binding.rvType.itemAnimator = DefaultItemAnimator()
         binding.rvType.isNestedScrollingEnabled = true
         binding.rvType.adapter = adapterCategories
 
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        adapter.stateRestorationPolicy = RecyclerView
+            .Adapter
+            .StateRestorationPolicy
+            .PREVENT_WHEN_EMPTY
         adapter.onClick { _, item ->
-            val destination = HomeFragmentDirections.actionHomeFragmentToDetailFragment(item.id ?: -1)
+            val destination = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                item.id ?: -1
+            )
             findNavController().navigate(destination)
         }
 
-        adapterCategories.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        adapterCategories.stateRestorationPolicy = RecyclerView
+            .Adapter
+            .StateRestorationPolicy
+            .PREVENT_WHEN_EMPTY
         adapterCategories.onClick { _, item ->
             viewModel.results(item.key)
         }

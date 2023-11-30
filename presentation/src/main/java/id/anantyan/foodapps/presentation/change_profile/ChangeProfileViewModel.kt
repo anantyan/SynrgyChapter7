@@ -7,6 +7,7 @@ import id.anantyan.foodapps.common.UIState
 import id.anantyan.foodapps.domain.model.UserModel
 import id.anantyan.foodapps.domain.repository.PreferencesUseCase
 import id.anantyan.foodapps.domain.repository.UserUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @HiltViewModel
 class ChangeProfileViewModel @Inject constructor(
@@ -22,7 +22,9 @@ class ChangeProfileViewModel @Inject constructor(
     private val preferencesUseCase: PreferencesUseCase
 ) : ViewModel() {
     private var _changeProfile: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private var _checkProfile: MutableStateFlow<UIState<UserModel>> = MutableStateFlow(UIState.Loading())
+    private var _checkProfile: MutableStateFlow<UIState<UserModel>> = MutableStateFlow(
+        UIState.Loading()
+    )
 
     val getUserId: Int = runBlocking { preferencesUseCase.executeGetUserId().first() }
     val changeProfile: StateFlow<Boolean> = _changeProfile

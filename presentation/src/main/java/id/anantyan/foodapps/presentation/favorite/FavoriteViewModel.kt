@@ -5,10 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.anantyan.foodapps.domain.model.FoodModel
 import id.anantyan.foodapps.domain.repository.FoodsUseCase
 import id.anantyan.foodapps.domain.repository.PreferencesUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(

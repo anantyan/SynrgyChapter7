@@ -98,7 +98,11 @@ class ChangeProfileFragment : BottomSheetDialogFragment() {
 
         viewModel.changeProfile.onEach { state ->
             if (state) {
-                Toast.makeText(requireContext(), getString(R.string.txt_success_change_profile), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.txt_success_change_profile),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }

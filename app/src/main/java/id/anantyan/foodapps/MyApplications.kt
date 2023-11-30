@@ -9,9 +9,9 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class MyApplications : Application(), Configuration.Provider {
-
     @Inject lateinit var workerFactory: UploadWorkerFactory
 
+    // asajasdasd
     override fun getWorkManagerConfiguration(): Configuration {
         val factory = DelegatingWorkerFactory()
         factory.addFactory(workerFactory)

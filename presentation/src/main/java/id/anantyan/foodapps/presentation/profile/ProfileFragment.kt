@@ -1,19 +1,13 @@
 package id.anantyan.foodapps.presentation.profile
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -29,7 +23,6 @@ import com.app.imagepickerlibrary.ImagePicker.Companion.registerImagePicker
 import com.app.imagepickerlibrary.listener.ImagePickerResultListener
 import com.app.imagepickerlibrary.model.PickExtension
 import com.app.imagepickerlibrary.model.PickerType
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import id.anantyan.foodapps.common.R
 import id.anantyan.foodapps.common.UIState
@@ -38,10 +31,9 @@ import id.anantyan.foodapps.common.path
 import id.anantyan.foodapps.presentation.NavGraphMainDirections
 import id.anantyan.foodapps.presentation.databinding.FragmentProfileBinding
 import id.anantyan.foodapps.work.uploadWorker
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), ImagePickerResultListener {
@@ -50,6 +42,7 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
     private val binding get() = _binding!!
     private val viewModel: ProfileViewModel by viewModels()
     private val imagePicker: ImagePicker by lazy { registerImagePicker(this) }
+
     @Inject lateinit var adapter: ProfileAdapter
 
     override fun onCreateView(
@@ -101,7 +94,10 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
         binding.toolbar.title = getString(R.string.txt_profile)
         binding.toolbar.isTitleCentered = true
 
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        adapter.stateRestorationPolicy = RecyclerView
+            .Adapter
+            .StateRestorationPolicy
+            .PREVENT_WHEN_EMPTY
 
         binding.rvProfile.setHasFixedSize(true)
         binding.rvProfile.itemAnimator = DefaultItemAnimator()
@@ -109,7 +105,10 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
         binding.rvProfile.isNestedScrollingEnabled = true
 
         binding.btnChange.setOnClickListener {
-            val list = listOf(getString(R.string.txt_photo_profile), getString(R.string.txt_biodata))
+            val list = listOf(
+                getString(R.string.txt_photo_profile),
+                getString(R.string.txt_biodata)
+            )
             requireContext().createListDialog(
                 title = getString(R.string.txt_choose_to_change),
                 items = list
