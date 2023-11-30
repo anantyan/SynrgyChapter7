@@ -52,7 +52,7 @@ class FavoriteFragment : Fragment() {
         binding.toolbar.title = getString(R.string.menu_favorites)
         binding.toolbar.isTitleCentered = true
 
-        binding.rvFavorite.setHasFixedSize(true)
+        binding.rvFavorite.setHasFixedSize(false)
         binding.rvFavorite.layoutManager = StaggeredGridLayoutManager(
             requireActivity().windowManager.calculateSpanCount(),
             RecyclerView.VERTICAL
@@ -82,9 +82,7 @@ class FavoriteFragment : Fragment() {
                 favoriteAdapter.submitList(emptyList())
                 binding.imgViewFavorite.isVisible = true
             }
-        }.flowWithLifecycle(viewLifecycleOwner.lifecycle).launchIn(
-            viewLifecycleOwner.lifecycleScope
-        )
+        }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
 
     private fun onBackPressedCallback() = object : OnBackPressedCallback(true) {

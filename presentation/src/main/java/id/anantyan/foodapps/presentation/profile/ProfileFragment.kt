@@ -62,7 +62,7 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
     }
 
     private fun bindObserver() {
-        viewModel.showProfile.onEach { state ->
+        viewModel.showProfile().onEach { state ->
             when (state) {
                 is UIState.Loading -> {}
                 is UIState.Success -> {
@@ -75,7 +75,7 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
             }
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
 
-        viewModel.showPhoto.observe(viewLifecycleOwner) { photoUri ->
+        viewModel.showPhoto().onEach { photoUri ->
             if (photoUri.isNotEmpty()) {
                 binding.imgProfile.load(photoUri) {
                     crossfade(true)
@@ -84,10 +84,7 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
                     size(ViewSizeResolver(binding.imgProfile))
                 }
             }
-        }
-
-        viewModel.showProfile()
-        viewModel.showPhoto()
+        }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
 
     private fun bindView() {
@@ -99,7 +96,7 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
             .StateRestorationPolicy
             .PREVENT_WHEN_EMPTY
 
-        binding.rvProfile.setHasFixedSize(true)
+        binding.rvProfile.setHasFixedSize(false)
         binding.rvProfile.itemAnimator = DefaultItemAnimator()
         binding.rvProfile.layoutManager = LinearLayoutManager(requireContext())
         binding.rvProfile.isNestedScrollingEnabled = true

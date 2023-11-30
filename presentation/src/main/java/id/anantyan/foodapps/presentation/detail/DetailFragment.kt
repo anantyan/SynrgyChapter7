@@ -75,7 +75,7 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         divider.dividerInsetEnd = 32
         divider.isLastItemDecorated = false
 
-        binding.rvIngredients.setHasFixedSize(true)
+        binding.rvIngredients.setHasFixedSize(false)
         binding.rvIngredients.addItemDecoration(divider)
         binding.rvIngredients.layoutManager = GridLayoutManager(
             requireContext(),
@@ -85,7 +85,7 @@ class DetailFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         binding.rvIngredients.isNestedScrollingEnabled = false
         binding.rvIngredients.adapter = ingredientsAdapter
 
-        binding.rvInstructions.setHasFixedSize(true)
+        binding.rvInstructions.setHasFixedSize(false)
         binding.rvInstructions.addItemDecoration(divider)
         binding.rvInstructions.layoutManager = GridLayoutManager(
             requireContext(),

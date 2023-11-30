@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindView() {
-        binding.rvHome.setHasFixedSize(true)
+        binding.rvHome.setHasFixedSize(false)
         binding.rvHome.layoutManager = StaggeredGridLayoutManager(
             requireActivity().windowManager.calculateSpanCount(),
             RecyclerView.VERTICAL
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         binding.rvHome.isNestedScrollingEnabled = true
         binding.rvHome.adapter = adapter
 
-        binding.rvType.setHasFixedSize(true)
+        binding.rvType.setHasFixedSize(false)
         binding.rvType.layoutManager = LinearLayoutManager(
             requireContext(),
             RecyclerView.HORIZONTAL,
@@ -91,8 +91,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindObserver() {
-        viewModel.results()
-
         viewModel.resultsCategories.onEach { results ->
             adapterCategories.submitList(results)
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
@@ -122,6 +120,8 @@ class HomeFragment : Fragment() {
                 }
             }
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
+
+        viewModel.results()
     }
 
     private fun onBackPressedCallback() = object : OnBackPressedCallback(true) {
