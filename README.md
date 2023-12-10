@@ -18,11 +18,10 @@ The challenge results from the intensive learning of chapter 7 - Which is where 
 
 ***note:*** 
 
-- Applying design patterns `MVVM`. ✔
-- Applying `Dependency Injection` on the project created. ✔
-- Applying `Clean Architecture`. ✔
-- Applying `Modularization`. ✔
-- Adding a photo feature to the profile where users can upload photos and proccessed in `Work Manager` on the app and display it. ✔
+- Applying `Build Flavor` for Ads and Non Ads Fiture. ✔
+- Applying `Linter Kotlin` using KtLint on the project. ✔
+- Applying `Chucker` for Realtime Report Network API. ✔
+- Applying `Usability Test` in specific fitur (Login Fiture: Module Presentation, Module Domain). ✔
 
 ### 👣 Technology and Library
 
