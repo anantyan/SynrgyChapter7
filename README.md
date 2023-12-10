@@ -23,6 +23,8 @@ The challenge results from the intensive learning of chapter 7 - Which is where 
 - Applying `Chucker` for Realtime Report Network API. ✔
 - Applying `Usability Test` in specific fitur (Login Fiture: Module Presentation, Module Domain). ✔
 
+For running tasks you can use the command line: `./gradlew ktlintCheck` or `./gradlew ktlintFormat` later a report will be generated whether some of the code implemented has errors when checked and auto format when formatted.
+
 ### 👣 Technology and Library
 
 - `Kotlin` (100%)
