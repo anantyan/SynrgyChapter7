@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         ActivityResultContracts.RequestPermission()
     ) { }
 
-    // askdjalkjdasasdd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

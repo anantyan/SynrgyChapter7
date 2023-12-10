@@ -1,40 +1,27 @@
 package id.anantyan.foodapps.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.liveData
 import id.anantyan.foodapps.common.MainDispatcherRule
+import id.anantyan.foodapps.common.R
 import id.anantyan.foodapps.common.UIState
-import id.anantyan.foodapps.common.getOrAwaitValue
 import id.anantyan.foodapps.domain.model.UserModel
 import id.anantyan.foodapps.domain.repository.PreferencesUseCase
 import id.anantyan.foodapps.domain.repository.UserUseCase
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.capture
 import org.mockito.kotlin.verify
 
-@ExperimentalCoroutinesApi
 class LoginViewModelTest {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
@@ -43,106 +30,77 @@ class LoginViewModelTest {
     val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Mock
+    private lateinit var preferencesUseCase: PreferencesUseCase
+
+    @Mock
+    private lateinit var userUseCase: UserUseCase
+
     private lateinit var viewModel: LoginViewModel
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
+        viewModel = LoginViewModel(preferencesUseCase, userUseCase)
+    }
+
+    @After
+    fun down() {
+        MockitoAnnotations.openMocks(this).close()
     }
 
     @Test
     fun `login success`() = runTest {
-        // setup actual and response
-        val actual = UserModel(
-            id = 1,
-            username = "aryarezza",
-            email = "aryarezza@email.com",
-            password = "Rahasia123"
-        )
-        val response = UserModel(
-            id = 1,
-            username = "aryarezza",
-            email = "aryarezza@email.com",
-            password = "Rahasia123"
-        )
+        val testData = UserModel(id = 1, username = "aryarezza", email = "aryarezza@email.com", password = "Rahasia123")
+        `when`(userUseCase.executeLogin(testData)).thenReturn(testData)
 
-        val liveData = MutableLiveData<UIState<UserModel>>()
-        liveData.value = UIState.Success(response)
+        viewModel.login(testData)
 
-        viewModel.login(actual)
+        val state = viewModel.login.first()
 
-        // proccess verify expectation
-        `when`(viewModel.login).thenReturn(liveData)
-        val expected = viewModel.login.getOrAwaitValue()
-        verify(viewModel).login
-
-        // test
-        assertEquals(expected.data, actual)
+        assertTrue(state is UIState.Success)
+        assertEquals(testData, state?.data)
     }
 
     @Test
-    fun `login error`() = runTest {
-        // setup actual and response
-        val request = UserModel(
-            id = 1,
-            username = "aryarezza",
-            email = "aryarezza@email.com",
-            password = "Rahasia123"
-        )
-        val response = -1
-        val actual = -1
-
-        val liveData = MutableLiveData<UIState<UserModel>>()
-        liveData.value = UIState.Error(null, response)
+    fun `login failed`() = runTest {
+        val testData = R.string.txt_invalid_login
+        val request = UserModel()
+        `when`(userUseCase.executeLogin(request)).thenReturn(null)
 
         viewModel.login(request)
 
-        // proccess verify expectation
-        `when`(viewModel.login).thenReturn(liveData)
-        val expected = viewModel.login.getOrAwaitValue()
-        verify(viewModel).login
+        val state = viewModel.login.first()
 
-        // test
-        assertEquals(expected.message, actual)
+        assertTrue(state is UIState.Error)
+        assertEquals(testData, state?.message)
     }
 
     @Test
-    fun `theme success`() = runTest {
-        // setup actual and response
-        val actual = true
-        val response = true
+    fun `theme true`() = runTest {
+        val testData = true
+        `when`(preferencesUseCase.executeGetTheme()).thenReturn(flowOf(testData))
 
-        val flow = MutableStateFlow(false)
-        flow.value = response
+        val state = viewModel.getTheme().first()
 
-        viewModel.setTheme(actual)
-
-        // proccess verify expectation
-        `when`(viewModel.getTheme).thenReturn(flow)
-        val expected = viewModel.getTheme
-        verify(viewModel).getTheme
-
-        // test
-        assertEquals(expected.first(), actual)
+        assertEquals(testData, state)
     }
 
     @Test
-    fun `theme error`() = runTest {
-        // setup actual and response
-        val actual = true
-        val response = false
+    fun `theme false`() = runTest {
+        val testData = false
+        `when`(preferencesUseCase.executeGetTheme()).thenReturn(flowOf(testData))
 
-        val flow = MutableStateFlow(false)
-        flow.value = response
+        val state = viewModel.getTheme().first()
 
-        viewModel.setTheme(actual)
+        assertEquals(testData, state)
+    }
 
-        // proccess verify expectation
-        `when`(viewModel.getTheme).thenReturn(flow)
-        val expected = viewModel.getTheme
-        verify(viewModel).getTheme
+    @Test
+    fun `setTheme value`() = runTest {
+        val testData = true
 
-        // test
-        assertNotEquals(expected.first(), actual)
+        viewModel.setTheme(testData)
+
+        verify(preferencesUseCase).executeSetTheme(testData)
     }
 }

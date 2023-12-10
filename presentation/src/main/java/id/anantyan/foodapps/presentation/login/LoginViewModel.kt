@@ -15,6 +15,8 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -23,26 +25,31 @@ class LoginViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ) : ViewModel() {
 
-    private var _login: MutableLiveData<UIState<UserModel>> = MutableLiveData()
+    private var _login: MutableStateFlow<UIState<UserModel>?> = MutableStateFlow(null)
 
-    val login: LiveData<UIState<UserModel>> = _login
-    val getTheme: Flow<Boolean> = preferencesUseCase.executeGetTheme()
+    val login: StateFlow<UIState<UserModel>?> = _login
 
     fun login(user: UserModel) {
         viewModelScope.launch {
-            _login.postValue(UIState.Loading())
+            _login.value = UIState.Loading()
             val response = userUseCase.executeLogin(user)
             if (response != null) {
                 preferencesUseCase.executeSetLogin(true)
                 preferencesUseCase.executeSetUsrId(response.id ?: -1)
-                _login.postValue(UIState.Success(response))
+                _login.value = UIState.Success(response)
             } else {
-                _login.postValue(UIState.Error(null, R.string.txt_invalid_login))
+                _login.value = UIState.Error(null, R.string.txt_invalid_login)
             }
         }
     }
 
     fun setTheme(value: Boolean) {
-        viewModelScope.launch { preferencesUseCase.executeSetTheme(value) }
+        viewModelScope.launch {
+            preferencesUseCase.executeSetTheme(value)
+        }
+    }
+
+    fun getTheme(): Flow<Boolean> {
+        return preferencesUseCase.executeGetTheme()
     }
 }

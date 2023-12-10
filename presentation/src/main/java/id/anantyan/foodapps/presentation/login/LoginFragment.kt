@@ -48,22 +48,19 @@ class LoginFragment : Fragment() {
     }
 
     private fun bindObserver() {
-        viewModel.getTheme.onEach {
+        viewModel.getTheme().onEach {
             binding.btnTheme.isChecked = it
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
 
-        viewModel.login.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UIState.Loading -> {}
-                is UIState.Success -> {
-                    val destination = NavGraphMainDirections.actionRootToHomeFragment()
-                    findNavController().navigate(destination)
-                }
-                is UIState.Error -> {
-                    Toast.makeText(requireContext(), getString(state.message!!), Toast.LENGTH_LONG).show()
-                }
+        viewModel.login.onEach { state ->
+            if (state is UIState.Success) {
+                val destination = NavGraphMainDirections.actionRootToHomeFragment()
+                findNavController().navigate(destination)
             }
-        }
+            if (state is UIState.Error) {
+                Toast.makeText(requireContext(), getString(state.message!!), Toast.LENGTH_LONG).show()
+            }
+        }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
 
     private fun bindView() {
