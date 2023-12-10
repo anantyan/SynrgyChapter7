@@ -50,7 +50,12 @@ class LoginViewModelTest {
 
     @Test
     fun `login success`() = runTest {
-        val testData = UserModel(id = 1, username = "aryarezza", email = "aryarezza@email.com", password = "Rahasia123")
+        val testData = UserModel(
+            id = 1,
+            username = "aryarezza",
+            email = "aryarezza@email.com",
+            password = "Rahasia123"
+        )
         `when`(userUseCase.executeLogin(testData)).thenReturn(testData)
 
         viewModel.login(testData)

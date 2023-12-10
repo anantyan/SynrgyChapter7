@@ -41,6 +41,24 @@ android {
 
     // data binding ini hanya untuk library dari ImagePicker/CapturePhoto :(
     buildFeatures { dataBinding = true }
+
+    flavorDimensions += listOf("ads_fiture")
+    productFlavors {
+        create("ads") {
+            dimension = "ads_fiture"
+            applicationIdSuffix = "ads"
+            versionNameSuffix = "-ads"
+            targetSdk = 34
+            minSdk = 24
+        }
+        create("nonAds") {
+            dimension = "ads_fiture"
+            applicationIdSuffix = "nonAds"
+            versionNameSuffix = "-nonAds"
+            targetSdk = 34
+            minSdk = 24
+        }
+    }
 }
 
 dependencies {
