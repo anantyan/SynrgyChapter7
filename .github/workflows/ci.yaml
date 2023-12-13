@@ -17,10 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup JDK 11
+      - name: Setup JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
           cache: gradle
 
@@ -73,13 +73,13 @@ jobs:
           name: linter-common
           path: common/build/reports-ktlint
 
-      - name: Build report Linter Module Presentation
+      - name: Build report Test Module Presentation
         uses: actions/upload-artifact@v3
         with:
           name: test-presentation
           path: presentation/build/reports
 
-      - name: Build report Linter Module Domain
+      - name: Build report Test Module Domain
         uses: actions/upload-artifact@v3
         with:
           name: test-domain
@@ -127,13 +127,13 @@ jobs:
           name: linter-common
           path: build/reports-ktlint/common
 
-      - name: Download Report Module Presentation
+      - name: Download Report Test Module Presentation
         uses: actions/download-artifact@v3
         with:
           name: test-presentation
           path: build/reports-test/presentation
 
-      - name: Download Report Module Domain
+      - name: Download Report Test Module Domain
         uses: actions/download-artifact@v3
         with:
           name: test-domain
