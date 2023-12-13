@@ -46,14 +46,12 @@ android {
     productFlavors {
         create("ads") {
             dimension = "ads_fiture"
-            applicationIdSuffix = "ads"
             versionNameSuffix = "-ads"
             targetSdk = 34
             minSdk = 24
         }
         create("nonAds") {
             dimension = "ads_fiture"
-            applicationIdSuffix = "nonAds"
             versionNameSuffix = "-nonAds"
             targetSdk = 34
             minSdk = 24

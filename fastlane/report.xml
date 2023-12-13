@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.0046266">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: ktlintCheck ktlintFormat presentation:testDebugUnitTest domain:testDebugUnitTest assembleDebug" time="200.8173614">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

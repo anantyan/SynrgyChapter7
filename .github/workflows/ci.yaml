@@ -1,0 +1,152 @@
+name: Android with Github Action - CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  collect-reports:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run : chmod +x gradlew
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.2'
+
+      - name: Setup Fastlane
+        uses: maierj/fastlane-action@v2.2.0
+        with:
+          lane: 'go'
+
+      - name: Build report Linter Module App
+        uses: actions/upload-artifact@v3
+        with:
+          name: linter-app
+          path: app/build/reports-ktlint
+
+      - name: Build report Linter Module Presentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: linter-presentation
+          path: presentation/build/reports-ktlint
+
+      - name: Build report Linter Module Domain
+        uses: actions/upload-artifact@v3
+        with:
+          name: linter-domain
+          path: domain/build/reports-ktlint
+
+      - name: Build report Linter Module DI
+        uses: actions/upload-artifact@v3
+        with:
+          name: linter-di
+          path: di/build/reports-ktlint
+
+      - name: Build report Linter Module Data
+        uses: actions/upload-artifact@v3
+        with:
+          name: linter-data
+          path: data/build/reports-ktlint
+
+      - name: Build report Linter Module Common
+        uses: actions/upload-artifact@v3
+        with:
+          name: linter-common
+          path: common/build/reports-ktlint
+
+      - name: Build report Linter Module Presentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-presentation
+          path: presentation/build/reports
+
+      - name: Build report Linter Module Domain
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-domain
+          path: domain/build/reports
+
+  merge-reports:
+
+    runs-on: ubuntu-latest
+    needs: collect-reports
+
+    steps:
+      - name: Download Report Module App
+        uses: actions/download-artifact@v3
+        with:
+          name: linter-app
+          path: build/reports-ktlint/app
+
+      - name: Download Report Module Presentation
+        uses: actions/download-artifact@v3
+        with:
+          name: linter-presentation
+          path: build/reports-ktlint/presentation
+
+      - name: Download Report Module Domain
+        uses: actions/download-artifact@v3
+        with:
+          name: linter-domain
+          path: build/reports-ktlint/domain
+
+      - name: Download Report Module DI
+        uses: actions/download-artifact@v3
+        with:
+          name: linter-di
+          path: build/reports-ktlint/di
+
+      - name: Download Report Module Data
+        uses: actions/download-artifact@v3
+        with:
+          name: linter-data
+          path: build/reports-ktlint/data
+
+      - name: Download Report Module Common
+        uses: actions/download-artifact@v3
+        with:
+          name: linter-common
+          path: build/reports-ktlint/common
+
+      - name: Download Report Module Presentation
+        uses: actions/download-artifact@v3
+        with:
+          name: test-presentation
+          path: build/reports-test/presentation
+
+      - name: Download Report Module Domain
+        uses: actions/download-artifact@v3
+        with:
+          name: test-domain
+          path: build/reports-test/domain
+
+      - name: Save Merged Report Test as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: merged-report-test
+          path: build/reports-test
+
+      - name: Save Merged Report Linter as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: merged-report-linter
+          path: build/reports-ktlint
