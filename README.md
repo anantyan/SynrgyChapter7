@@ -18,10 +18,12 @@ The challenge results from the intensive learning of chapter 7 - Which is where 
 
 ***note:*** 
 
-- Applying `Build Flavor` for Ads and Non Ads Fiture. ✔
+- Applying `Build Flavor` for **Ads** and **Non Ads** Fiture in _Module App_. ✔
 - Applying `Linter Kotlin` using KtLint on the project. ✔
 - Applying `Chucker` for Realtime Report Network API. ✔
-- Applying `Usability Test` in specific fitur (Login Fiture: Module Presentation, Module Domain). ✔
+- Applying `Usability Test` in specific fitur (Login Fiture: _Module Presentation_, _Module Domain_). ✔
+
+For running tasks you can use the command line: `./gradlew ktlintCheck` or `./gradlew ktlintFormat` later a report will be generated whether some of the code implemented has errors when checked and auto format when formatted.
 
 ### 👣 Technology and Library
 
