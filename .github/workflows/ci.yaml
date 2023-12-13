@@ -33,7 +33,7 @@ jobs:
           ruby-version: '2.7.2'
 
       - name: Setup Fastlane
-        uses: maierj/fastlane-action@v2.2.0
+        uses: maierj/fastlane-action@v3
         with:
           lane: 'go'
 
