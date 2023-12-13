@@ -30,10 +30,10 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0.6'
+          ruby-version: '2.7.2'
 
       - name: Setup Fastlane
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v2.2.0
         with:
           lane: 'go'
 
