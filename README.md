@@ -1,5 +1,7 @@
 # Synrgy Chapter 7
 
+[![Android with Github Action - CI](https://github.com/anantyan/SynrgyChapter7/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/anantyan/SynrgyChapter7/actions/workflows/ci.yaml)
+
 ### 🚩Table of Contents
 
 [Description](https://github.com/anantyan/SynrgyChapter7#-description)
