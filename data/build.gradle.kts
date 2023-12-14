@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -15,8 +17,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "API_KEY_MEALS", "\"${System.getenv("API_KEY_MEALS")}\"")
-        buildConfigField("String", "API_KEY_UPLOAD", "\"${System.getenv("API_KEY_UPLOAD")}\"")
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "API_KEY_MEALS", "\"${properties.getProperty("API_KEY_MEALS")}\"")
+        buildConfigField("String", "API_KEY_UPLOAD", "\"${properties.getProperty("API_KEY_UPLOAD")}\"")
     }
 
     buildTypes {
