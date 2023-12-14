@@ -45,56 +45,28 @@ jobs:
         with:
           lane: 'go'
 
-      - name: Build report Linter Module App
+      - name: Build report Linter All Module
         uses: actions/upload-artifact@v3
         with:
-          name: linter-app
-          path: app/build/reports-ktlint
+          name: report-ktlint
+          path: |
+            app/build/reports-ktlint,
+            presentation/build/reports-ktlint,
+            domain/build/reports-ktlint,
+            di/build/reports-ktlint,
+            data/build/reports-ktlint,
+            common/build/reports-ktlint
 
-      - name: Build report Linter Module Presentation
+      - name: Build report Test All Module
         uses: actions/upload-artifact@v3
         with:
-          name: linter-presentation
-          path: presentation/build/reports-ktlint
+          name: report-test
+          path: |
+            presentation/build/reports,
+            domain/build/reports
 
-      - name: Build report Linter Module Domain
+      - name: Build debug Apks
         uses: actions/upload-artifact@v3
         with:
-          name: linter-domain
-          path: domain/build/reports-ktlint
-
-      - name: Build report Linter Module DI
-        uses: actions/upload-artifact@v3
-        with:
-          name: linter-di
-          path: di/build/reports-ktlint
-
-      - name: Build report Linter Module Data
-        uses: actions/upload-artifact@v3
-        with:
-          name: linter-data
-          path: data/build/reports-ktlint
-
-      - name: Build report Linter Module Common
-        uses: actions/upload-artifact@v3
-        with:
-          name: linter-common
-          path: common/build/reports-ktlint
-
-      - name: Build report Test Module Presentation
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-presentation
-          path: presentation/build/reports
-
-      - name: Build report Test Module Domain
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-domain
-          path: domain/build/reports
-
-      - name: Build debu APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-apk
+          name: generate-apks
           path: app/build/outputs/apk
