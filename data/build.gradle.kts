@@ -14,6 +14,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "API_KEY_MEALS", "\"${System.getenv("API_KEY_MEALS")}\"")
+        buildConfigField("String", "API_KEY_UPLOAD", "\"${System.getenv("API_KEY_UPLOAD")}\"")
     }
 
     buildTypes {
@@ -31,6 +34,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

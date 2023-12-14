@@ -1,8 +1,8 @@
 package id.anantyan.foodapps.data.remote.service
 
+import id.anantyan.foodapps.data.BuildConfig
 import id.anantyan.foodapps.data.remote.model.RecipeResponse
 import id.anantyan.foodapps.data.remote.model.RecipesResponse
-import id.anantyan.foodapps.data.remote.network.AppNetwork.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,12 +14,12 @@ interface FoodsApi {
         @Query("type") type: String? = null,
         @Query("number") number: Int? = 10,
         @Query("offset") offset: Int? = 0,
-        @Query("apiKey") apiKey: String? = API_KEY
+        @Query("apiKey") apiKey: String? = BuildConfig.API_KEY_MEALS
     ): Response<RecipesResponse>
 
     @GET("recipes/{id}/information")
     suspend fun result(
         @Path("id") id: Int? = -1,
-        @Query("apiKey") apiKey: String? = API_KEY
+        @Query("apiKey") apiKey: String? = BuildConfig.API_KEY_MEALS
     ): Response<RecipeResponse>
 }
