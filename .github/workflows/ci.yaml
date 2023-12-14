@@ -37,6 +37,14 @@ jobs:
         with:
           lane: 'go'
 
+      - name: Generate API_KEY
+        env:
+          API_KEY_MEALS: $
+          API_KEY_UPLOAD: $
+        run: |
+          echo API_KEY_MEALS=\"$API_KEY_MEALS\" > ./local.properties
+          echo API_KEY_UPLOAD=\"$API_KEY_UPLOAD\" >> ./local.properties
+
       - name: Build report Linter Module App
         uses: actions/upload-artifact@v3
         with:
