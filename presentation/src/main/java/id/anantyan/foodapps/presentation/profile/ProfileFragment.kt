@@ -163,7 +163,7 @@ class ProfileFragment : Fragment(), ImagePickerResultListener {
             .showFolder(true)
             .cameraIcon(false)
             .doneIcon(true)
-            .allowCropping(true)
+            .allowCropping(false)
             .compressImage(true)
             .maxImageSize(2)
             .extension(PickExtension.ALL)
