@@ -17,28 +17,6 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 
-fun Uri.byteArray(context: Context): ByteArray? {
-    val realPath: String? = this.path(context)
-    return realPath?.let { path ->
-        try {
-            val file = File(path)
-            val inputStream: InputStream = FileInputStream(file)
-            val byteBuffer = ByteArrayOutputStream()
-
-            val buffer = ByteArray(1024)
-            var bytesRead: Int
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                byteBuffer.write(buffer, 0, bytesRead)
-            }
-
-            byteBuffer.toByteArray()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
-        }
-    }
-}
-
 fun Uri.path(context: Context): String? {
     var realPath: String? = null
     val uriScheme = this.scheme
